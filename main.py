@@ -4,13 +4,6 @@ import uvicorn
 api = fastapi.FastAPI()
 
 
-@api.get("/")
-def index():
-    return {
-        "Welcome": "Setup Complete"
-    }
-
-
 @api.get("/api/calculate")
 def calculate():
     return 2 + 2
