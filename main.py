@@ -1,16 +1,39 @@
-# This is a sample Python script.
+import fastapi
+import uvicorn
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
+api = fastapi.FastAPI()
 
 
-# Press the green button in the gutter to run the script.
-if __name__ == '__main__':
-    print_hi('PyCharm')
+@api.get("/")
+def index():
+    return {
+        "Welcome": "Setup Complete"
+    }
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
+@api.get("/api/calculate")
+def calculate():
+    return 2 + 2
+
+
+@api.get("/api/speedtest")
+def speedTest():
+    import speedtest
+    wifi = speedtest.Speedtest()
+    servers = []
+    print("Wifi Download Speed is ", wifi.download())
+    print("Wifi Upload Speed is ", wifi.upload())
+    print("Wifi best server is ", wifi.get_best_server())
+    print("Wifi Download Speed is ", wifi.results.share())
+    print("Wifi ping ", wifi.results.ping)
+
+    return {
+        "download": wifi.download(),
+        "upload": wifi.upload(),
+        "get_best_server": wifi.get_best_server(),
+        "ping": wifi.results.ping,
+        "result_share": wifi.results.share()
+    }
+
+# if __name__ == '__main__':
+#     uvicorn.run(api)
